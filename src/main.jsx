@@ -9,13 +9,18 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { RouterProvider } from "react-router-dom";
 import { mainrouter } from "./Router";
 const theme = createTheme();
-
+import { createClient, Provider } from "urql";
+const client = createClient({
+  url: "http://localhost:4000/graphql",
+});
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CssBaseline>
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={mainrouter} />
-      </ThemeProvider>
-    </CssBaseline>
+    <Provider value={client}>
+      <CssBaseline>
+        <ThemeProvider theme={theme}>
+          <RouterProvider router={mainrouter} />
+        </ThemeProvider>
+      </CssBaseline>
+    </Provider>
   </React.StrictMode>
 );

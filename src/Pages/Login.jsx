@@ -12,17 +12,32 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 import { MdLock } from "react-icons/md";
+import { useMutation } from "urql";
+import { LoginMutation } from "../Utilities/LoginUtils";
+import { LoadingButton } from "@mui/lab";
 
 export default function Login() {
+  const [loginResult, login] = useMutation(LoginMutation);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
+      username: data.get("username"),
       password: data.get("password"),
     });
+    handleLogin(data);
   };
 
+  const handleLogin = async (data) => {
+    const variables = {
+      username: data.get("username"),
+      password: data.get("password"),
+    };
+    console.log(loginResult);
+    const result = await login(variables);
+    console.log(result);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -46,10 +61,10 @@ export default function Login() {
             color="secondary"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -67,16 +82,17 @@ export default function Login() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
+          <LoadingButton
             type="submit"
             color="secondary"
+            loading={loginResult.fetching}
             fullWidth
             disableElevation
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
             Sign In
-          </Button>
+          </LoadingButton>
           <Grid container>
             <Grid item xs>
               <Link to="/auth/register">
