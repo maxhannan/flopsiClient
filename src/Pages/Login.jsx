@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+import { Await, Link, Navigate, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
@@ -12,12 +12,18 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 import { MdLock } from "react-icons/md";
-import { useMutation } from "urql";
-import { LoginMutation } from "../Utilities/LoginUtils";
+
+import { LoginMutation } from "../Utilities/AuthMutations";
 import { LoadingButton } from "@mui/lab";
 
+import { useContext } from "react";
+import AuthContext, { AuthContextProvider } from "../Context/AuthContext";
+import { useMutation } from "@apollo/client";
+
 export default function Login() {
-  const [loginResult, login] = useMutation(LoginMutation);
+  const { authLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [login, { data, loading, error }] = useMutation(LoginMutation);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,15 +35,16 @@ export default function Login() {
     handleLogin(data);
   };
 
-  const handleLogin = async (data) => {
+  const handleLogin = async (formData) => {
     const variables = {
-      username: data.get("username"),
-      password: data.get("password"),
+      username: formData.get("username"),
+      password: formData.get("password"),
     };
-    console.log(loginResult);
-    const result = await login(variables);
-    console.log(result);
+    await login({ variables });
+    const authInfo = data.logIn;
+    authLogin(authInfo.user, authInfo.token);
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -85,7 +92,7 @@ export default function Login() {
           <LoadingButton
             type="submit"
             color="secondary"
-            loading={loginResult.fetching}
+            loading={loading}
             fullWidth
             disableElevation
             variant="contained"

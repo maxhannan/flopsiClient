@@ -10,8 +10,10 @@ import { useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
 import { TbScaleOutline } from "react-icons/tb";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { useQuery } from "urql";
 import FullScreenDialog from "../Components/FullScreenDialog";
 import IngredientTable from "../Components/IngredientTable";
+import { getUserQuery } from "../Utilities/AuthMutations";
 
 export async function recipeLoader({ params }) {
   const recipe = params.recipeId;

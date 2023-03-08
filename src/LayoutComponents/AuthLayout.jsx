@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import NavBar from "../Components/NavBar";
+import { AuthContextProvider } from "../Context/AuthContext";
 
 const AuthLayout = () => {
   const [open, setOpen] = useState(false);

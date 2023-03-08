@@ -21,11 +21,7 @@ const RecipeSummary = () => {
               RF
             </Avatar>
           }
-          action={
-            <IconButton aria-label="settings">
-              <MdOutlineChevronRight />
-            </IconButton>
-          }
+          action={<MdOutlineChevronRight />}
           title="Saffron Mayo"
           subheader="Sauces"
         />

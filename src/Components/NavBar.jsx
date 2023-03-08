@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,13 +10,16 @@ import PopMenu from "./PopMenu";
 import { MdAdd } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
+import AuthContext from "../Context/AuthContext";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
-
+  const { authLogout, currentUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const handleLogout = () => {
+    authLogout();
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,7 +40,9 @@ const NavBar = () => {
           component="div"
           color="secondary"
           sx={{ flexGrow: 1 }}
-        ></Typography>
+        >
+          {currentUser ? currentUser.displayName : ""}
+        </Typography>
         <div>
           <Button
             variant="outlined"
@@ -53,7 +58,7 @@ const NavBar = () => {
             variant="outlined"
             size="large"
             color="secondary"
-            onClick={() => navigate("/auth/login")}
+            onClick={handleLogout}
             sx={{ ml: "1rem" }}
           >
             <GiCook />
