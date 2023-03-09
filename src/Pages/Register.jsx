@@ -7,19 +7,46 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { LoadingButton } from "@mui/lab";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { MdLock } from "react-icons/md";
+import { RegisterMutation } from "../Utilities/AuthMutations";
+import { useMutation } from "@apollo/client";
+import { useContext } from "react";
+import AuthContext from "../Context/AuthContext";
 
 const theme = createTheme();
 
 export default function Register() {
+  const { authLogin } = useContext(AuthContext);
+
+  const [RegisterAction, { loading, error, data }] = useMutation(
+    RegisterMutation,
+    {
+      errorPolicy: "all",
+    }
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const formValues = new FormData(event.currentTarget);
+    const variables = {
+      displayName:
+        formValues.get("firstName") + " " + formValues.get("lastName"),
+      username: formValues.get("username"),
+      email: formValues.get("email"),
+      chef: true,
+      password: formValues.get("password"),
+    };
+    handleRegister(variables);
+  };
+  const handleRegister = async (variables) => {
+    const result = await RegisterAction({ variables });
+    console.log(result);
+    if (result.data) {
+      const authInfo = result.data.register;
+      authLogin(authInfo.user, authInfo.token);
+    }
   };
 
   return (
@@ -72,12 +99,33 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="Username"
+                  error={error && error.message.includes("User")}
+                  helperText={
+                    error && error.message.includes("User") ? error.message : ""
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={error && error.message.includes("Email")}
+                  helperText={
+                    error && error.message.includes("Email")
+                      ? error.message
+                      : ""
+                  }
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -90,19 +138,21 @@ export default function Register() {
                 />
               </Grid>
             </Grid>
-            <Button
+            <LoadingButton
               type="submit"
+              color="secondary"
+              loading={loading}
               fullWidth
-              variant="contained"
               disableElevation
+              variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
-            </Button>
+              Sign up
+            </LoadingButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/auth/login">
-                  <Typography color="primary" variant="body2">
+                  <Typography color="secondary" variant="body2">
                     Already have an account? Sign in
                   </Typography>
                 </Link>

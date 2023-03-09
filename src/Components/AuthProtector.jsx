@@ -1,7 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { Navigate, useLoaderData } from "react-router-dom";
-import AuthContext from "../Context/AuthContext";
-import { useAuth } from "../Hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 function AuthProtector({ children }) {
   const token = localStorage.getItem("token");

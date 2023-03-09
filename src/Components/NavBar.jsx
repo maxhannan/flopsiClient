@@ -17,6 +17,7 @@ const NavBar = () => {
   const location = useLocation().pathname;
   const { authLogout, currentUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
+
   const handleLogout = () => {
     authLogout();
   };
@@ -49,20 +50,33 @@ const NavBar = () => {
             elevation="0"
             startIcon={<MdAdd />}
             color="secondary"
-            onClick={handleMenu}
           >
             Add
           </Button>
-          <PopMenu anchorEl={anchorEl} handleClose={handleClose} />
+
           <IconButton
             variant="outlined"
             size="large"
             color="secondary"
-            onClick={handleLogout}
+            onClick={handleMenu}
             sx={{ ml: "1rem" }}
           >
             <GiCook />
           </IconButton>
+          <PopMenu
+            anchorEl={anchorEl}
+            handleClose={handleClose}
+            items={[
+              {
+                name: "View Profile",
+                cb: () => console.log("profile"),
+              },
+              {
+                name: "Logout",
+                cb: handleLogout,
+              },
+            ]}
+          />
         </div>
       </Toolbar>
     </AppBar>

@@ -1,7 +1,7 @@
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
-const PopMenu = ({ anchorEl, handleClose }) => {
+const PopMenu = ({ anchorEl, handleClose, items }) => {
   return (
     <Menu
       id="menu-appbar"
@@ -18,8 +18,11 @@ const PopMenu = ({ anchorEl, handleClose }) => {
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      <MenuItem onClick={handleClose}>Add Recipe</MenuItem>
-      <MenuItem>Add Category</MenuItem>
+      {items.map((i) => (
+        <MenuItem key={i.name} onClick={i.cb}>
+          {i.name}
+        </MenuItem>
+      ))}
     </Menu>
   );
 };

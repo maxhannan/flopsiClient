@@ -1,44 +1,45 @@
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Await, Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
 import { MdLock } from "react-icons/md";
-
-import { LoginMutation } from "../Utilities/AuthMutations";
 import { LoadingButton } from "@mui/lab";
 
 import { useContext } from "react";
-import AuthContext, { AuthContextProvider } from "../Context/AuthContext";
+import AuthContext from "../Context/AuthContext";
+
+import { LoginMutation } from "../Utilities/AuthMutations";
 import { useMutation } from "@apollo/client";
 
 export default function Login() {
   const { authLogin } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [login, { data, loading, error }] = useMutation(LoginMutation);
+
+  const [login, { loading, error, data }] = useMutation(LoginMutation, {
+    errorPolicy: "all",
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formInfo = new FormData(event.currentTarget);
-    handleLogin(formInfo);
-  };
-
-  const handleLogin = async (formData) => {
     const variables = {
       username: formData.get("username"),
       password: formData.get("password"),
     };
+    handleLogin(variables);
+  };
+
+  const handleLogin = async (variables) => {
     const result = await login({ variables });
-    const authInfo = result.data.logIn;
-    authLogin(authInfo.user, authInfo.token);
+    if (result.data) {
+      const authInfo = result.data.logIn;
+      authLogin(authInfo.user, authInfo.token);
+    }
   };
 
   return (
@@ -67,6 +68,7 @@ export default function Login() {
             id="username"
             label="Username"
             name="username"
+            error={error}
             autoComplete="username"
             autoFocus
           />
@@ -79,8 +81,11 @@ export default function Login() {
             label="Password"
             type="password"
             id="password"
+            error={error}
+            helperText={error && error.message}
             autoComplete="current-password"
           />
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
