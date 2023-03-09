@@ -6,17 +6,8 @@ import NavBar from "../Components/NavBar";
 import { AuthContextProvider } from "../Context/AuthContext";
 
 const AuthLayout = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleDialogOpen = () => {
-    setOpen(true);
-  };
-  const handleDialogClose = () => {
-    setOpen(false);
-  };
   return (
     <Box>
-      <NavBar />
       <Container maxWidth="xl" sx={{ paddingY: "5em", paddingX: "0" }}>
         <Outlet />
       </Container>

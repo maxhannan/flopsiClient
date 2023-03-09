@@ -9,11 +9,10 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import { MdClose, MdOutlineEditNote } from "react-icons/md";
 import { TbScaleOutline } from "react-icons/tb";
-import { useLoaderData, useNavigate } from "react-router-dom";
-import { useQuery } from "urql";
+import { useLoaderData, useNavigate, useNavigation } from "react-router-dom";
+
 import FullScreenDialog from "../Components/FullScreenDialog";
 import IngredientTable from "../Components/IngredientTable";
-import { getUserQuery } from "../Utilities/AuthMutations";
 
 export async function recipeLoader({ params }) {
   const recipe = params.recipeId;
@@ -23,7 +22,7 @@ export async function recipeLoader({ params }) {
 const Recipe = ({ params }) => {
   const navigate = useNavigate();
   const recipe = useLoaderData();
-  console.log(recipe);
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -34,7 +33,6 @@ const Recipe = ({ params }) => {
     setOpen(false);
   };
 
-  console.log(useLoaderData());
   return (
     <Container>
       <Box sx={{ display: "flex", mb: ".25rem" }}>

@@ -24,18 +24,14 @@ export const AuthContextProvider = ({ children }) => {
     console.log("hello");
     setCurrentUser(user);
     addUser(user, token);
+    nav("/recipes");
   };
 
   const authLogout = () => {
     removeUser();
     setCurrentUser(null);
+    nav("/auth/login");
   };
-
-  useEffect(() => {
-    if (currentUser) {
-      nav("/recipes");
-    }
-  }, [currentUser]);
 
   useEffect(() => {
     const checkLoggedIn = async () => {

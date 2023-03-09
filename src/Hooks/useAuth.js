@@ -16,7 +16,7 @@ export const useAuth = () => {
   const getToken = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      return "";
+      return null;
     }
     return JSON.parse(token);
   };

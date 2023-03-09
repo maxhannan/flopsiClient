@@ -18,7 +18,7 @@ const BottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [value, setValue] = useState(location.pathname);
+  const [value, setValue] = useState(location.pathname.replace("/", ""));
 
   const handleChange = (_, newValue) => {
     setValue(newValue);

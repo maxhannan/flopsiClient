@@ -10,7 +10,7 @@ import Slide from "@mui/material/Slide";
 import { MdClose } from "react-icons/md";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 
 export default function FullScreenDialog({ open, handleClose }) {

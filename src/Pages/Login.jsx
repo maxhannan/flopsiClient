@@ -27,12 +27,8 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
-    handleLogin(data);
+    const formInfo = new FormData(event.currentTarget);
+    handleLogin(formInfo);
   };
 
   const handleLogin = async (formData) => {
@@ -40,8 +36,8 @@ export default function Login() {
       username: formData.get("username"),
       password: formData.get("password"),
     };
-    await login({ variables });
-    const authInfo = data.logIn;
+    const result = await login({ variables });
+    const authInfo = result.data.logIn;
     authLogin(authInfo.user, authInfo.token);
   };
 

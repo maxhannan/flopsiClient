@@ -38,6 +38,7 @@ export const mainrouter = createBrowserRouter([
           </AuthProtector>
         ),
         errorElement: <ErrorPage />,
+
         children: [
           {
             path: "recipes",
