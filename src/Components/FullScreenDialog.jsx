@@ -8,12 +8,18 @@ import Typography from "@mui/material/Typography";
 
 import Slide from "@mui/material/Slide";
 import { MdClose } from "react-icons/md";
+import { Container } from "@mui/system";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="left" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog({ open, handleClose }) {
+export default function FullScreenDialog({
+  title,
+  open,
+  handleClose,
+  children,
+}) {
   return (
     <div>
       <Dialog
@@ -33,13 +39,14 @@ export default function FullScreenDialog({ open, handleClose }) {
               <MdClose />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Edit Recipe
+              {title}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save
             </Button>
           </Toolbar>
         </AppBar>
+        <Container>{children}</Container>
       </Dialog>
     </div>
   );

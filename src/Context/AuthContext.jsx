@@ -1,15 +1,7 @@
-import { Children, createContext, useEffect, useState } from "react";
-import {
-  Navigate,
-  Outlet,
-  RouterProvider,
-  useNavigate,
-  useOutlet,
-} from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/useAuth";
 import { useUser } from "../Hooks/useUser";
-import Login from "../Pages/Login";
-import { mainrouter } from "../Router";
 
 const AuthContext = createContext();
 

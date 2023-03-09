@@ -28,8 +28,8 @@ export default function Login() {
     event.preventDefault();
     const formInfo = new FormData(event.currentTarget);
     const variables = {
-      username: formData.get("username"),
-      password: formData.get("password"),
+      username: formInfo.get("username"),
+      password: formInfo.get("password"),
     };
     handleLogin(variables);
   };

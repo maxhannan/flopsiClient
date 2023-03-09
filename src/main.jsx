@@ -9,7 +9,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { RouterProvider } from "react-router-dom";
 import { mainrouter } from "./Router";
 const theme = createTheme();
-import { createClient, Provider } from "urql";
 
 import {
   ApolloClient,

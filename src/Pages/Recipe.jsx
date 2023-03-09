@@ -123,10 +123,14 @@ const Recipe = ({ params }) => {
       </Grid>
 
       <FullScreenDialog
+        title={"Edit Recipe"}
         open={open}
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}
-      />
+      >
+        {" "}
+        <h4>Hello world</h4>
+      </FullScreenDialog>
     </Container>
   );
 };

@@ -11,10 +11,13 @@ import { MdAdd } from "react-icons/md";
 import { IconButton } from "@mui/material";
 import { GiCook } from "react-icons/gi";
 import AuthContext from "../Context/AuthContext";
+import AddRecipeContext from "../Context/AddRecipeContext";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  const { handleClickOpen } = useContext(AddRecipeContext);
+
   const { authLogout, currentUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -45,14 +48,17 @@ const NavBar = () => {
           {currentUser ? currentUser.displayName : ""}
         </Typography>
         <div>
-          <Button
-            variant="outlined"
-            elevation="0"
-            startIcon={<MdAdd />}
-            color="secondary"
-          >
-            Add
-          </Button>
+          {location === "/recipes" && (
+            <Button
+              variant="outlined"
+              elevation="0"
+              startIcon={<MdAdd />}
+              onClick={handleClickOpen}
+              color="secondary"
+            >
+              Add
+            </Button>
+          )}
 
           <IconButton
             variant="outlined"
@@ -69,7 +75,7 @@ const NavBar = () => {
             items={[
               {
                 name: "View Profile",
-                cb: () => console.log("profile"),
+                cb: () => navigate("/profile"),
               },
               {
                 name: "Logout",
