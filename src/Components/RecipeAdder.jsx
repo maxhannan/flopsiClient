@@ -9,7 +9,7 @@ import { Container, Stack } from "@mui/system";
 
 const RecipeAdder = () => {
   return (
-    <Container sx={{ mt: "2rem" }}>
+    <Container sx={{ my: "2rem" }}>
       <Stack spacing={2}>
         <FormControlLabel
           control={<Switch defaultChecked />}
