@@ -10,7 +10,6 @@ import { useState } from "react";
 import { MdClose, MdDelete } from "react-icons/md";
 import { v4 } from "uuid";
 import top100Films from "../Utilities/FAKELIST.JSX";
-
 const IngredientAdder = ({
   id,
   handleDelete,
@@ -19,17 +18,19 @@ const IngredientAdder = ({
   ingredient,
 }) => {
   const [updatedIngredient, setUpdatedIngredient] = useState(ingredient);
+
   return (
     <Stack spacing={2}>
       <Box sx={{ display: "flex" }}>
         <TextField
+          multiline
           sx={{ flex: "3", mr: ".5em" }}
           label="Ingredient Name"
-          value={updatedIngredient.ingredientName}
+          value={updatedIngredient.name}
           onChange={(e) =>
             setUpdatedIngredient({
               ...updatedIngredient,
-              ingredientName: e.target.value,
+              name: e.target.value,
             })
           }
         />

@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { v4 as uuidv4 } from "uuid";
 
 export default function IngredientTable() {
-  const matches = useMediaQuery("(min-width:1050px)");
+  const matches = useMediaQuery("(min-width:650px)");
 
   const columns = [
     {
@@ -16,7 +16,12 @@ export default function IngredientTable() {
   ];
 
   const rows = [
-    { id: uuidv4(), name: "Hummus Component", qty: 1000, unit: "gr" },
+    {
+      id: uuidv4(),
+      name: "Parsely, Chopped",
+      qty: 1000,
+      unit: "gr",
+    },
     { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
     { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
     { id: uuidv4(), name: "White Wine Vinegar", qty: 1000, unit: "gr" },
